@@ -7,7 +7,7 @@ from requests.exceptions import ConnectionError, Timeout
 
 subscription_key = "your-subscription-key"
 search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
-search_term = "収集したい画像のキーワード"
+search_term = "your-search-keyword"
 
 total_require = 1000
 count = 100
@@ -53,11 +53,11 @@ def bing_image_search():
             continue
 
 
-def face_detection():
+def face_detection(path):
     if not os.path.exists("./faces"):
         os.mkdir("./faces")
 
-    face_cascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
+    face_cascade = cv2.CascadeClassifier(path)
 
     idx = 0
     file_list = glob.glob("./BingImageSearch/*.jpg")
@@ -69,6 +69,12 @@ def face_detection():
             face = img[rect[1]: rect[1] + rect[3], rect[0]: rect[0] + rect[2]]
             cv2.imwrite("./faces/face_{:0>4d}.jpg".format(idx), face)
             idx += 1
+            
+def flip_augmentation():
+    file_list = glob.glob("./faces/*.jpg")
+    for file in file_list:
+        img = cv2.imread(file):
+        cv2.imwrite(file.rsplit(".", 1)[0] + "_flip.jpg", img[:, ::-1, :])
 
 
 def dcgan_mapfile():
@@ -86,7 +92,8 @@ def dcgan_mapfile():
 if __name__ == "__main__":
     bing_image_search()
 
-    # face_detection()
-
+    # face_detection("cv2/data/haarcascade_frontalface_default.xml")
+    # flip_augmentation()
+    
     # dcgan_mapfile()
     
