@@ -14,7 +14,7 @@ num_classes = 1
 
 z_dim = 100
 
-iterations = 50000
+iteration = 50000
 minibatch_size = 16
 num_samples = 612
 
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     # train DCGAN
     #
     logging = {"step": [], "G_loss": [], "D_loss": []}
-    for step in range(iterations):
+    for step in range(iteration):
         #
         # train discriminator
         #
