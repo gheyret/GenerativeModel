@@ -64,7 +64,7 @@ def face_detection(path):
     for file in file_list:
         img = cv2.imread(file)
 
-        faces = face_cascade.detectMultiScale(img, scaleFactor=1.1, minNeighbors=5, minSize=(100, 100))
+        faces = face_cascade.detectMultiScale(img, scaleFactor=1.1, minNeighbors=5, minSize=(50, 50))
         for rect in faces:
             face = img[rect[1]: rect[1] + rect[3], rect[0]: rect[0] + rect[2]]
             cv2.imwrite("./faces/face_{:0>4d}.jpg".format(idx), face)
