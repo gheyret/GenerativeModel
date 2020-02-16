@@ -14,7 +14,7 @@ num_classes = 1
 
 z_dim = 100
 
-adam = True
+Adam = True
 D_iter = 2
 iteration = 50000
 minibatch_size = 16
@@ -120,15 +120,15 @@ if __name__ == "__main__":
     #
     # optimizer and cyclical learning rate
     #
-    if adam:
+    if Adam:
         G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
                            gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
         D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
                            gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     else:
-        G_learner = C.rmsprop(G_fake.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
+        G_learner = C.rmsprop(G_fake.parameters, lr=5e-5, gamma=0.99, inc=1.1, dec=0.9, max=2e-4, min=5e-5,
                               gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-        D_learner = C.rmsprop(D_real.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
+        D_learner = C.rmsprop(D_real.parameters, lr=5e-5, gamma=0.99, inc=1.1, dec=0.9, max=2e-4, min=5e-5,
                               gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     D_progress_printer = C.logging.ProgressPrinter(tag="Discriminator")
