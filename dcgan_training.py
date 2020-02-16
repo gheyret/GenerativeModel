@@ -14,6 +14,7 @@ num_classes = 1
 
 z_dim = 100
 
+adam = True
 D_iter = 2
 iteration = 50000
 minibatch_size = 16
@@ -119,18 +120,19 @@ if __name__ == "__main__":
     #
     # optimizer and cyclical learning rate
     #
-    """
-    G_learner = C.rmsprop(G_fake.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
-                          gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    D_learner = C.rmsprop(D_real.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
-                          gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    """
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
-                       gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
-                       gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+    if adam:
+        G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
+                           gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+        D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
+                           gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+    else:
+        G_learner = C.rmsprop(G_fake.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
+                              gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+        D_learner = C.rmsprop(D_real.parameters, lr=1e-4, gamma=0.99, inc=1.1, dec=0.9, max=1e-4, min=1e-8,
+                              gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     D_progress_printer = C.logging.ProgressPrinter(tag="Discriminator")
+
 
     if not os.path.exists("./dcgan_image"):
         os.mkdir("./dcgan_image")
@@ -191,12 +193,12 @@ if __name__ == "__main__":
         # tensorboard image
         #
         if step % 10 == 0:
-            image = np.rollaxis(list(output[1].values())[0][0][np.array([2, 1, 0]), :, :] / 2 + 0.5, 0, 3) * 255
+            image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
         
             if not os.path.exists("./dcgan_image/step%d" % step):
                 os.mkdir("./dcgan_image/step%d" % step)
 
-            cv2.imwrite("./dcgan_image/step%d/fake.png" % step, image[..., ::-1])
+            cv2.imwrite("./dcgan_image/step%d/fake.png" % step, image)
 
         #
         # loss and error logging
