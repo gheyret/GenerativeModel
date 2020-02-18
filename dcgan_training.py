@@ -30,8 +30,7 @@ def create_reader(map_file, train):
 
 
 def dcgan_generator(h):
-    with C.layers.default_options(init=C.normal(0.02), pad=True, bias=False,
-                                  map_rank=1, use_cntk_engine=True):
+    with C.layers.default_options(init=C.normal(0.02), pad=True, bias=False, map_rank=1, use_cntk_engine=True):
         h = C.reshape(h, (-1, 1, 1))
 
         h = ConvolutionTranspose2D((4, 4), 1024, pad=False, strides=1, output_shape=(4, 4))(h)
@@ -121,10 +120,10 @@ if __name__ == "__main__":
     # optimizer and cyclical learning rate
     #
     if Adam:
-        G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
-                           gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-        D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
-                           gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+        G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, gradient_clipping_with_truncation=True,
+                           gradient_clipping_threshold_per_sample=minibatch_size)
+        D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, gradient_clipping_with_truncation=True,
+                           gradient_clipping_threshold_per_sample=minibatch_size)
     else:
         G_learner = C.rmsprop(G_fake.parameters, lr=5e-5, gamma=0.99, inc=1.1, dec=0.9, max=2e-4, min=5e-5,
                               gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
