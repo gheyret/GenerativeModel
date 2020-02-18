@@ -14,8 +14,6 @@ num_classes = 1
 
 z_dim = 100
 
-Adam = True
-D_iter = 2
 iteration = 50000
 minibatch_size = 16
 num_samples = 612
@@ -119,16 +117,10 @@ if __name__ == "__main__":
     #
     # optimizer and cyclical learning rate
     #
-    if Adam:
-        G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, gradient_clipping_with_truncation=True,
-                           gradient_clipping_threshold_per_sample=minibatch_size)
-        D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, gradient_clipping_with_truncation=True,
-                           gradient_clipping_threshold_per_sample=minibatch_size)
-    else:
-        G_learner = C.rmsprop(G_fake.parameters, lr=5e-5, gamma=0.99, inc=1.1, dec=0.9, max=2e-4, min=5e-5,
-                              gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-        D_learner = C.rmsprop(D_real.parameters, lr=5e-5, gamma=0.99, inc=1.1, dec=0.9, max=2e-4, min=5e-5,
-                              gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
+    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
+                       gradient_clipping_with_truncation=True, gradient_clipping_threshold_per_sample=minibatch_size)
+    D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5, unit_gain=False,
+                       gradient_clipping_with_truncation=True, gradient_clipping_threshold_per_sample=minibatch_size)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     D_progress_printer = C.logging.ProgressPrinter(tag="Discriminator")
 
@@ -149,27 +141,6 @@ if __name__ == "__main__":
         #
         # train discriminator
         #
-        """
-        if step % 100 == 0:
-            D_step_loss = 0
-            for _ in range(D_iter):
-                z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
-                x_data = train_reader.next_minibatch(minibatch_size, input_map=input_map)
-
-                batch_input = {x: x_data[x].data, z: z_data}
-
-                D_trainer.train_minibatch(batch_input)
-                D_step_loss += D_trainer.previous_minibatch_loss_average
-            D_step_loss /= D_iter
-        else:
-            z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
-            x_data = train_reader.next_minibatch(minibatch_size, input_map=input_map)
-
-            batch_input = {x: x_data[x].data, z: z_data}
-
-            D_trainer.train_minibatch(batch_input)
-            D_step_loss = D_trainer.previous_minibatch_loss_average
-        """
         z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
         x_data = train_reader.next_minibatch(minibatch_size, input_map=input_map)
 
