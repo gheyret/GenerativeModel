@@ -160,7 +160,7 @@ if __name__ == "__main__":
         G_step_loss = G_trainer.previous_minibatch_loss_average
 
         #
-        # tensorboard image
+        # save image
         #
         if step % 10 == 0:
             image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
