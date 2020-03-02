@@ -4,6 +4,6 @@
 
 ## Result
 
-![WGAN](wgan_image.png "WGAN")
+![WGAN_image](wgan_image.png "WGAN_image")
 
-<img src="wgan.gif" align="center">
+![WGAN_gif](wgan.gif "WGAN_gif")
