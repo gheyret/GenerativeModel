@@ -2,8 +2,8 @@
 
 GAN : Wasserstein GAN - Gradient Penalty
 
-## Result
+## Results
 
-![WGAN_image](wgan_image.png "WGAN_image")
+<img src="wgan_image" align="center">
 
-![WGAN_gif](wgan.gif "WGAN_gif")
+<img src="wgan.gif" align="center">
