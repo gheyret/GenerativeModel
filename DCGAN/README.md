@@ -4,10 +4,10 @@ GAN : Deep Convolutional Generative Adversarial Networks
 
 ## Deep Convolutional Generative Adversarial Networks
 
-![dcgan](dcgan.png "DCGAN")
+<img src="dcgan.png" align="center">
 
 ## Result
 
-![dcgan_image](dcgan_image.png "DCGAN_image")
+<img src="dcgan_image.png" align="center">
 
-![dcgan_gif](dcgan.gif "DCGAN_gif")
+<img src="dcgan.gif" align="center">
