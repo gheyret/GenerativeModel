@@ -7,6 +7,8 @@
 
 DCGAN - Deep Convolutional Generative Adversarial Networks
 
+<img src="DCGAN/dcgan.png" align="center">
+
 <img src="DCGAN/dcgan_image.png" align="center">
 
 ## WassersteinGAN
