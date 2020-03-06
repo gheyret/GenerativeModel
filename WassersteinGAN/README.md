@@ -4,6 +4,10 @@ GAN : Wasserstein GAN - Gradient Penalty
 
 ## Results
 
-<img src="wgan_image.png" align="center">
+<p align="center">
+  <img src="wgan_image.png">
+</p>
 
-<img src="wgan.gif" align="center">
+<p align="center">
+  <img src="wgan.gif">
+</p>
