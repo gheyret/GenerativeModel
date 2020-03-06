@@ -13,5 +13,5 @@ GAN : Deep Convolutional Generative Adversarial Networks
 </p>
 
 <p align="center">
-  <img src="dcgan.gif" align="center">
+  <img src="dcgan.gif">
 </p>
