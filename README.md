@@ -2,10 +2,11 @@
 
 ## CycleGAN
 
+GAN : CycleGAN - Transfer Skin Color
 
 ## DCGAN
 
-DCGAN - Deep Convolutional Generative Adversarial Networks
+GAN : DCGAN - Deep Convolutional Generative Adversarial Networks
 
 <img src="DCGAN/dcgan.png">
 
@@ -15,7 +16,7 @@ DCGAN - Deep Convolutional Generative Adversarial Networks
 
 ## WassersteinGAN
 
-WassersteinGAN - Wasserstein GAN Gradient Penalty
+GAN : WassersteinGAN - Wasserstein GAN Gradient Penalty
 
 <p align="center">
   <img src="WassersteinGAN/wgan_image.png">
