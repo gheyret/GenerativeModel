@@ -4,6 +4,8 @@
 
 GAN : CycleGAN - Transfer Skin Color
 
+<img src="CycleGAN/cyclegan.png">
+
 ## DCGAN
 
 GAN : DCGAN - Deep Convolutional Generative Adversarial Networks
