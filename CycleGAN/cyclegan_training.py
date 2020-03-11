@@ -14,7 +14,7 @@ img_height = 512
 img_width = 512
 num_classes = 1
 
-epoch_size = 100
+epoch_size = 500
 minibatch_size = 1
 num_samples = 101
 
