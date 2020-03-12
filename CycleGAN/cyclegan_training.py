@@ -145,7 +145,7 @@ if __name__ == "__main__":
     Dy_loss = C.reduce_mean(C.square(Dy_real - 1.0)) / 2 + C.reduce_mean(C.square(Dy_fake)) / 2
 
     #
-    # optimizer and cyclical learning rate
+    # optimizer
     #
     F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False, gradient_clipping_with_truncation=True)
     G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5, unit_gain=False, gradient_clipping_with_truncation=True)
