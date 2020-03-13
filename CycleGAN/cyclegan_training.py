@@ -27,12 +27,10 @@ def InstanceNormalization(initial_scale=1, initial_bias=0, epsilon=C.default_ove
 
     dtype = C.get_default_override(None, dtype=C.default_override_or(np.float32))
 
-    # parameters bound to this Function
     scale = C.Parameter(_INFERRED, init=initial_scale, name='scale')
     bias = C.Parameter(_INFERRED, init=initial_bias, name='bias')
     epsilon = np.asarray(epsilon, dtype=dtype)
 
-    # expression
     @BlockFunction('InstanceNormalization', name)
     def instance_normalize(x):
         mean = C.reduce_mean(x, axis=(1, 2))
