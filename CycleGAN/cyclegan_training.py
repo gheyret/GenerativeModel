@@ -168,7 +168,7 @@ if __name__ == "__main__":
     y_input_map = {y: y_train_reader.streams.images}
 
     #
-    # train Cycle GAN
+    # train CycleGAN
     #
     logging = {"epoch": [], "F_loss": [], "G_loss": [], "Dx_loss": [], "Dy_loss": []}
     for epoch in range(epoch_size):
