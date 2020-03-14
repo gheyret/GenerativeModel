@@ -87,7 +87,7 @@ def wgan_critic(h):
         h = LayerNormalization()(h)
         h = C.leaky_relu(h, alpha=0.2)
 
-        h = Convolution2D((4, 4), 1, pad=False, bias=True, strides=1)(h)
+        h = Convolution2D((4, 4), 1, pad=False, strides=1, bias=True)(h)
 
         return h
 
