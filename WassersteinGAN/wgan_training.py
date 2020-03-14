@@ -121,7 +121,7 @@ if __name__ == "__main__":
     C_loss = - C_real + C_fake + 10 * gradient_penalty
 
     #
-    # optimizer and cyclical learning rate
+    # optimizer
     #
     G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.0, unit_gain=False,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
