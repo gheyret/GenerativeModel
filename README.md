@@ -7,7 +7,7 @@ CycleGAN - Transfer Skin Color
 <img src="CycleGAN/cyclegan.png">
 
 <p align="center">
-  <img src="cyclegan_transfer.png">
+  <img src="CycleGAN/cyclegan_transfer.png">
 </p>
 
 ## DCGAN
