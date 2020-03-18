@@ -1,6 +1,6 @@
 # WassersteinGAN
 
-GAN : Wasserstein GAN - Gradient Penalty
+WassersteinGAN - Wasserstein GAN Gradient Penalty
 
 ## Results
 
