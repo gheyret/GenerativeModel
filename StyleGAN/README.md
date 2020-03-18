@@ -1,3 +1,3 @@
 # StyleGAN
 
-GAN : SytleGAN
+SytleGAN - 
