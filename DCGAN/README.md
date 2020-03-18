@@ -1,8 +1,6 @@
 # DCGAN
 
-GAN : Deep Convolutional Generative Adversarial Networks
-
-## Deep Convolutional Generative Adversarial Networks
+DCGAN - Deep Convolutional Generative Adversarial Networks
 
 <img src="dcgan.png">
 
