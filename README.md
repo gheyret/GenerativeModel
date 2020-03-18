@@ -6,6 +6,10 @@ CycleGAN - Transfer Skin Color
 
 <img src="CycleGAN/cyclegan.png">
 
+<p align="center">
+  <img src="cyclegan_transfer.png">
+</p>
+
 ## DCGAN
 
 DCGAN - Deep Convolutional Generative Adversarial Networks
