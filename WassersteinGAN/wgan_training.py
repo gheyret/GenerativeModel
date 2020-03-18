@@ -123,9 +123,9 @@ if __name__ == "__main__":
     #
     # optimizer
     #
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.0, unit_gain=False, use_mean_gradient=True,
+    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.0, unit_gain=False,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    C_learner = C.adam(C_real.parameters, lr=1e-4, momentum=0.0, unit_gain=False, use_mean_gradient=True,
+    C_learner = C.adam(C_real.parameters, lr=1e-4, momentum=0.0, unit_gain=False,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     C_progress_printer = C.logging.ProgressPrinter(tag="Critic")
