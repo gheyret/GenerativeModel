@@ -16,6 +16,10 @@ GAN : DCGAN - Deep Convolutional Generative Adversarial Networks
   <img src="DCGAN/dcgan_image.png">
 </p>
 
+## StyleGAN
+
+GAN : StyleGAN -
+
 ## WassersteinGAN
 
 GAN : WassersteinGAN - Wasserstein GAN Gradient Penalty
