@@ -109,8 +109,10 @@ if __name__ == "__main__":
     C_real = wgan_critic(x_real)
     C_fake = C_real.clone(method="share", substitutions={x_real.output: G_fake.output})
 
+    #
+    # gradient penalty
+    #
     gradient_penalty = C.input_variable(shape=(1, 1, 1), dtype="float32")
-
     epsilon = C.random.uniform((1,), dtype="float32")
     interpolate = epsilon * x_real.output + (1 - epsilon) * G_fake.output
 
@@ -153,6 +155,9 @@ if __name__ == "__main__":
 
             batch_input = {x: x_data[x].data, z: z_data}
 
+            #
+            # compute gradient penalty
+            #
             gradient = C_real.grad({C_real.arguments[0]: interpolate.eval(batch_input)})
             gp_norm = np.square(C.reduce_l2(gradient, axis=(1, 2, 3)).eval() - 1)
             batch_input[gradient_penalty] = gp_norm
