@@ -113,7 +113,7 @@ if __name__ == "__main__":
     x = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
     y = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
 
-        x_norm = (x - 127.5) / 127.5
+    x_norm = (x - 127.5) / 127.5
     y_norm = (y - 127.5) / 127.5
     
     F_fake = cyclegan_generator(y_norm)  # F(Y) -> X
@@ -174,8 +174,8 @@ if __name__ == "__main__":
     Dx_trainer = C.Trainer(Dx_real, (Dx_loss, None), [Dx_learner], [Dx_progress_printer, Dx_tensorabord_writer])
     Dy_trainer = C.Trainer(Dy_real, (Dy_loss, None), [Dy_learner], [Dy_progress_printer, Dy_tensorabord_writer])
 
-    x_input_map = {x_norm: x_train_reader.streams.images}
-    y_input_map = {y_norm: y_train_reader.streams.images}
+    x_input_map = {x: x_train_reader.streams.images}
+    y_input_map = {y: y_train_reader.streams.images}
 
     #
     # train CycleGAN
