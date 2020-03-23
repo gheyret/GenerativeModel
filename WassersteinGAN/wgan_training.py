@@ -138,7 +138,7 @@ if __name__ == "__main__":
     G_trainer = C.Trainer(G_fake, (G_loss, None), [G_learner], [G_progress_printer])
     C_trainer = C.Trainer(C_real, (C_loss, None), [C_learner], [C_progress_printer])
 
-    input_map = {x: train_reader.streams.images}
+    input_map = {x_real: train_reader.streams.images}
 
     #
     # train Wasserstein GAN
