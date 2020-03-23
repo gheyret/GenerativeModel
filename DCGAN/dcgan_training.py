@@ -131,7 +131,7 @@ if __name__ == "__main__":
     G_trainer = C.Trainer(G_fake, (G_loss, None), [G_learner], [G_progress_printer])
     D_trainer = C.Trainer(D_real, (D_loss, None), [D_learner], [D_progress_printer])
 
-    input_map = {x_real: train_reader.streams.images}
+    input_map = {x: train_reader.streams.images}
 
     #
     # train DCGAN
