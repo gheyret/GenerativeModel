@@ -113,29 +113,29 @@ if __name__ == "__main__":
     x = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
     y = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
 
-    x_real = (x - 127.5) / 127.5
-    y_real = (y - 127.5) / 127.5
+        x_norm = (x - 127.5) / 127.5
+    y_norm = (y - 127.5) / 127.5
     
-    F_fake = cyclegan_generator(y_real)  # F(Y) -> X
-    G_fake = cyclegan_generator(x_real)  # G(X) -> Y
+    F_fake = cyclegan_generator(y_norm)  # F(Y) -> X
+    G_fake = cyclegan_generator(x_norm)  # G(X) -> Y
 
-    x_hat = F_fake.clone(method="share", substitutions={y_real.output: G_fake.output})  # F(G(X)) -> X'
-    y_hat = G_fake.clone(method="share", substitutions={x_real.output: F_fake.output})  # G(F(Y)) -> Y'
+    x_hat = F_fake.clone(method="share", substitutions={y_norm.output: G_fake.output})  # F(G(X)) -> X'
+    y_hat = G_fake.clone(method="share", substitutions={x_norm.output: F_fake.output})  # G(F(Y)) -> Y'
 
     #
     # discriminator
     #
-    Dx_real = cyclegan_discriminator(x_real)
-    Dx_fake = Dx_real.clone(method="share", substitutions={x_real.output: F_fake.output})
+    Dx_real = cyclegan_discriminator(x_norm)
+    Dx_fake = Dx_real.clone(method="share", substitutions={x_norm.output: F_fake.output})
 
-    Dy_real = cyclegan_discriminator(y_real)
-    Dy_fake = Dy_real.clone(method="share", substitutions={y_real.output: G_fake.output})
+    Dy_real = cyclegan_discriminator(y_norm)
+    Dy_fake = Dy_real.clone(method="share", substitutions={y_norm.output: G_fake.output})
 
     #
     # loss function
     #
-    cycle_consistency_loss = lambda_x * C.reduce_mean(C.abs(x_hat - x_real)) + \
-                             lambda_y * C.reduce_mean(C.abs(y_hat - y_real))
+    cycle_consistency_loss = lambda_x * C.reduce_mean(C.abs(x_hat - x_norm)) + \
+                             lambda_y * C.reduce_mean(C.abs(y_hat - y_norm))
 
     F_loss = C.reduce_mean(C.square(Dx_fake - 1.0)) / 2 + cycle_consistency_loss
     G_loss = C.reduce_mean(C.square(Dy_fake - 1.0)) / 2 + cycle_consistency_loss
@@ -159,13 +159,23 @@ if __name__ == "__main__":
         os.makedirs("./image/F")
         os.makedirs("./image/G")
 
-    F_trainer = C.Trainer(F_fake, (F_loss, None), [F_learner], [F_progress_printer])
-    G_trainer = C.Trainer(G_fake, (G_loss, None), [G_learner], [G_progress_printer])
-    Dx_trainer = C.Trainer(Dx_real, (Dx_loss, None), [Dx_learner], [Dx_progress_printer])
-    Dy_trainer = C.Trainer(Dy_real, (Dy_loss, None), [Dy_learner], [Dy_progress_printer])
+    if not os.path.exists("./tensorboard"):
+        os.makedirs("./tensorboard/F")
+        os.makedirs("./tensorboard/G")
+        os.makedirs("./tensorboard/Dx")
+        os.makedirs("./tensorboard/Dy")
+    F_tensorabord_writer = C.logging.TensorBoardProgressWriter(freq=10, log_dir="./tensorboard/F", model=F_fake)
+    G_tensorabord_writer = C.logging.TensorBoardProgressWriter(freq=10, log_dir="./tensorboard/G", model=G_fake)
+    Dx_tensorabord_writer = C.logging.TensorBoardProgressWriter(freq=10, log_dir="./tensorboard/Dx", model=Dx_real)
+    Dy_tensorabord_writer = C.logging.TensorBoardProgressWriter(freq=10, log_dir="./tensorboard/Dy", model=Dy_real)
 
-    x_input_map = {x_real: x_train_reader.streams.images}
-    y_input_map = {y_real: y_train_reader.streams.images}
+    F_trainer = C.Trainer(F_fake, (F_loss, None), [F_learner], [F_progress_printer, F_tensorabord_writer])
+    G_trainer = C.Trainer(G_fake, (G_loss, None), [G_learner], [G_progress_printer, G_tensorabord_writer])
+    Dx_trainer = C.Trainer(Dx_real, (Dx_loss, None), [Dx_learner], [Dx_progress_printer, Dx_tensorabord_writer])
+    Dy_trainer = C.Trainer(Dy_real, (Dy_loss, None), [Dy_learner], [Dy_progress_printer, Dy_tensorabord_writer])
+
+    x_input_map = {x_norm: x_train_reader.streams.images}
+    y_input_map = {y_norm: y_train_reader.streams.images}
 
     #
     # train CycleGAN
