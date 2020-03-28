@@ -118,9 +118,9 @@ if __name__ == "__main__":
     # optimizer and cyclical learning rate
     #
     G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5,
-                       gradient_clipping_with_truncation=True, gradient_clipping_threshold_per_sample=minibatch_size)
+                       gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5,
-                       gradient_clipping_with_truncation=True, gradient_clipping_threshold_per_sample=minibatch_size)
+                       gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     D_progress_printer = C.logging.ProgressPrinter(tag="Discriminator")
 
