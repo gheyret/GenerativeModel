@@ -26,7 +26,7 @@ StyleGAN -
 
 ## WassersteinGAN
 
-WassersteinGAN - Wasserstein GAN Gradient Penalty
+WassersteinGAN - WassersteinGAN Gradient Penalty
 
 <p align="center">
   <img src="WassersteinGAN/wgan_image.png">
