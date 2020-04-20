@@ -48,7 +48,7 @@ def create_reader(map_file, is_train):
     transforms = [xforms.crop(crop_type="center", side_ratio=0.9),
                   xforms.scale(width=img_width, height=img_height, channels=img_channel, interpolations="linear")]
     return C.io.MinibatchSource(C.io.ImageDeserializer(map_file, C.io.StreamDefs(
-        images=C.io.StreamDef(field="image", transforms=transforms),
+        image=C.io.StreamDef(field="image", transforms=transforms),
         dummy=C.io.StreamDef(field="label", shape=num_classes))),
                                 randomize=is_train, max_sweeps=C.io.INFINITELY_REPEAT if is_train else 1)
 
@@ -178,8 +178,8 @@ if __name__ == "__main__":
     Dx_trainer = C.Trainer(Dx_real, (Dx_loss, None), [Dx_learner], [Dx_progress_printer, Dx_tensorabord_writer])
     Dy_trainer = C.Trainer(Dy_real, (Dy_loss, None), [Dy_learner], [Dy_progress_printer, Dy_tensorabord_writer])
 
-    x_input_map = {x: x_train_reader.streams.images}
-    y_input_map = {y: y_train_reader.streams.images}
+    x_input_map = {x: x_train_reader.streams.image}
+    y_input_map = {y: y_train_reader.streams.image}
 
     #
     # train CycleGAN
