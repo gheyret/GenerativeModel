@@ -23,7 +23,7 @@ def create_reader(map_file, train):
     transforms = [xforms.color(brightness_radius=0.2, contrast_radius=0.2, saturation_radius=0.2),
                   xforms.scale(width=img_width, height=img_height, channels=img_channel, interpolations="linear")]
     return C.io.MinibatchSource(C.io.ImageDeserializer(map_file, C.io.StreamDefs(
-        images=C.io.StreamDef(field="image", transforms=transforms),
+        image=C.io.StreamDef(field="image", transforms=transforms),
         dummy=C.io.StreamDef(field="label", shape=num_classes))), randomize=train)
 
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     G_trainer = C.Trainer(G_fake, (G_loss, None), [G_learner], [G_progress_printer])
     D_trainer = C.Trainer(D_real, (D_loss, None), [D_learner], [D_progress_printer])
 
-    input_map = {x: train_reader.streams.images}
+    input_map = {x: train_reader.streams.image}
 
     #
     # train DCGAN
