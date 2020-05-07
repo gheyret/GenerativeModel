@@ -141,12 +141,12 @@ if __name__ == "__main__":
     input_map = {x: train_reader.streams.image}
 
     #
-    # train Wasserstein GAN
+    # training
     #
     logging = {"step": [], "G_loss": [], "C_loss": [], "GP": []}
     for step in range(iteration):
         #
-        # train critic
+        # critic
         #
         C_step_loss = 0
         for _ in range(n_critic):
@@ -167,7 +167,7 @@ if __name__ == "__main__":
         C_step_loss /= n_critic
 
         #
-        # train generator
+        # generator
         #
         z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
 
