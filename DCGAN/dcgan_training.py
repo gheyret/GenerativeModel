@@ -134,12 +134,12 @@ if __name__ == "__main__":
     input_map = {x: train_reader.streams.image}
 
     #
-    # train DCGAN
+    # training
     #
     logging = {"step": [], "G_loss": [], "D_loss": []}
     for step in range(iteration):
         #
-        # train discriminator
+        # discriminator
         #
         z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
         x_data = train_reader.next_minibatch(minibatch_size, input_map=input_map)
@@ -150,7 +150,7 @@ if __name__ == "__main__":
         D_step_loss = D_trainer.previous_minibatch_loss_average
         
         #
-        # train generator
+        # generator
         #
         z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
 
