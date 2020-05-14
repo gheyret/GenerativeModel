@@ -4,8 +4,6 @@
 
 CycleGAN - Transfer Skin Color
 
-<img src="CycleGAN/cyclegan.png">
-
 <p align="center">
   <img src="CycleGAN/cyclegan_transfer.png">
 </p>
@@ -13,8 +11,6 @@ CycleGAN - Transfer Skin Color
 ## DCGAN
 
 DCGAN - Deep Convolutional Generative Adversarial Networks
-
-<img src="DCGAN/dcgan.png">
 
 <p align="center">
   <img src="DCGAN/dcgan_image.png">
