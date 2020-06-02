@@ -24,7 +24,8 @@ def create_reader(map_file, is_train):
                   xforms.scale(width=img_width, height=img_height, channels=img_channel, interpolations="linear")]
     return C.io.MinibatchSource(C.io.ImageDeserializer(map_file, C.io.StreamDefs(
         image=C.io.StreamDef(field="image", transforms=transforms),
-        dummy=C.io.StreamDef(field="label", shape=num_classes))), randomize=is_train)
+        dummy=C.io.StreamDef(field="label", shape=num_classes))),
+                                randomize=is_train, max_sweeps=C.io.INFINITELY_REPEAT if is_train else 1)
 
 
 def dcgan_generator(h):
