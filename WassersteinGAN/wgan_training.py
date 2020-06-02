@@ -20,12 +20,13 @@ minibatch_size = 16
 num_samples = 612
 
 
-def create_reader(map_file, train):
+def create_reader(map_file, is_train):
     transforms = [xforms.color(brightness_radius=0.2, contrast_radius=0.2, saturation_radius=0.2),
                   xforms.scale(width=img_width, height=img_height, channels=img_channel, interpolations="linear")]
     return C.io.MinibatchSource(C.io.ImageDeserializer(map_file, C.io.StreamDefs(
         image=C.io.StreamDef(field="image", transforms=transforms),
-        dummy=C.io.StreamDef(field="label", shape=num_classes))), randomize=train)
+        dummy=C.io.StreamDef(field="label", shape=num_classes))),
+                                randomize=is_train, max_sweeps=C.io.INFINITELY_REPEAT if is_train else 1)
 
 
 def wgan_generator(h):
@@ -96,7 +97,7 @@ if __name__ == "__main__":
     #
     # built-in reader
     #
-    train_reader = create_reader("./train_wgan_map.txt", True)
+    train_reader = create_reader("./train_wgan_map.txt", is_train=True)
 
     #
     # latent, input, generator, and critic
