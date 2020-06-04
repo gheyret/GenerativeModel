@@ -113,7 +113,7 @@ if __name__ == "__main__":
     # loss function
     #
     G_loss = - C.log(D_fake)
-    D_loss = - C.log(D_real) - C.log(1.0 - D_fake)
+    D_loss = - (C.log(D_real) + C.log(1.0 - D_fake))
 
     #
     # optimizer and cyclical learning rate
