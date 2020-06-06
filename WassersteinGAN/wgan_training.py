@@ -151,7 +151,7 @@ if __name__ == "__main__":
         #
         C_step_loss = 0
         for _ in range(n_critic):
-            z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
+            z_data = np.random.normal(size=(minibatch_size, z_dim)).astype("float32")
             x_data = train_reader.next_minibatch(minibatch_size, input_map=input_map)
 
             batch_input = {x: x_data[x].data, z: z_data}
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         #
         # generator
         #
-        z_data = np.ascontiguousarray(np.random.normal(size=(minibatch_size, z_dim)), dtype="float32")
+        z_data = np.random.normal(size=(minibatch_size, z_dim)).astype("float32")
 
         batch_input = {z: z_data}
 
