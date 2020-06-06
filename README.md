@@ -1,5 +1,9 @@
 # Generative Adversarial Networks
 
+## ConditionalGAN
+
+ConditionalGAN - 
+
 ## CycleGAN
 
 CycleGAN - Transfer Skin Color
@@ -15,6 +19,10 @@ DCGAN - Deep Convolutional Generative Adversarial Networks
 <p align="center">
   <img src="DCGAN/dcgan_image.png">
 </p>
+
+## Pix2Pix
+
+Pix2Pix - 
 
 ## StyleGAN
 
