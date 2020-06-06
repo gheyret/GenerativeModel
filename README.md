@@ -2,7 +2,11 @@
 
 ## ConditionalGAN
 
-ConditionalGAN - 
+ConditionalGAN - ConditionalGAN MNIST
+
+<p aling="center">
+  <img src="ConditionalGAN/cgan_mnist.png", width=400, height=300>
+</p>
 
 ## CycleGAN
 
