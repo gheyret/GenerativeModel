@@ -14,10 +14,9 @@ num_classes = 1
 
 z_dim = 100
 
+iteration = 10000
+minibatch_size = 32
 n_critic = 5
-iteration = 50000
-minibatch_size = 16
-num_samples = 612
 
 
 def create_reader(map_file, is_train):
@@ -65,31 +64,15 @@ def wgan_generator(h):
 
 def wgan_critic(h):
     with C.layers.default_options(init=C.normal(0.02), pad=True, bias=False):
-        h = Convolution2D((3, 3), 32, strides=2, bias=True)(h)
-        h = C.leaky_relu(h, alpha=0.2)
+        h = C.leaky_relu(Convolution2D((3, 3), 32, strides=2, bias=True)(h), alpha=0.2)
 
-        h = Convolution2D((3, 3), 64, strides=2)(h)
-        h = LayerNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 128, strides=2)(h)
-        h = LayerNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 256, strides=2)(h)
-        h = LayerNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 512, strides=2)(h)
-        h = LayerNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 1024, strides=2)(h)
-        h = LayerNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
+        h = C.leaky_relu(LayerNormalization()(Convolution2D((3, 3), 64, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(LayerNormalization()(Convolution2D((3, 3), 128, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(LayerNormalization()(Convolution2D((3, 3), 256, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(LayerNormalization()(Convolution2D((3, 3), 512, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(LayerNormalization()(Convolution2D((3, 3), 1024, strides=2)(h)), alpha=0.2)
 
         h = Convolution2D((4, 4), 1, pad=False, strides=1, bias=True)(h)
-
         return h
 
 
@@ -180,7 +163,7 @@ if __name__ == "__main__":
         #
         # save image
         #
-        if step % 10 == 0:
+        if step % 1000 == 0:
             image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
             
             if not os.path.exists("./wgan_image/step%d" % step):
