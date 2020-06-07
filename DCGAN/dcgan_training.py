@@ -15,8 +15,7 @@ num_classes = 1
 z_dim = 100
 
 iteration = 50000
-minibatch_size = 16
-num_samples = 612
+minibatch_size = 32
 
 
 def create_reader(map_file, is_train):
@@ -64,28 +63,13 @@ def dcgan_generator(h):
 
 def dcgan_discriminator(h):
     with C.layers.default_options(init=C.normal(0.02), pad=True, bias=False, map_rank=1, use_cntk_engine=True):
-        h = Convolution2D((3, 3), 32, strides=2, bias=True)(h)
-        h = C.leaky_relu(h, alpha=0.2)
+        h = C.leaky_relu(Convolution2D((3, 3), 32, strides=2, bias=True)(h), alpha=0.2)
 
-        h = Convolution2D((3, 3), 64, strides=2)(h)
-        h = BatchNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 128, strides=2)(h)
-        h = BatchNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 256, strides=2)(h)
-        h = BatchNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 512, strides=2)(h)
-        h = BatchNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
-
-        h = Convolution2D((3, 3), 1024, strides=2)(h)
-        h = BatchNormalization()(h)
-        h = C.leaky_relu(h, alpha=0.2)
+        h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 64, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 128, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 256, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 512, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 1024, strides=2)(h)), alpha=0.2)
 
         h = Convolution2D((4, 4), 1, activation=C.sigmoid, pad=False, bias=True, strides=1)(h)
 
@@ -118,9 +102,9 @@ if __name__ == "__main__":
     #
     # optimizer and cyclical learning rate
     #
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5,
+    G_learner = C.adam(G_fake.parameters, lr=C.learning_parameter_schedule_per_sample(1e-4), momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    D_learner = C.adam(D_real.parameters, lr=1e-4, momentum=0.5,
+    D_learner = C.adam(D_real.parameters, lr=C.learning_parameter_schedule_per_sample(1e-4), momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_progress_printer = C.logging.ProgressPrinter(tag="Generator")
     D_progress_printer = C.logging.ProgressPrinter(tag="Discriminator")
