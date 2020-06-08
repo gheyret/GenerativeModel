@@ -113,29 +113,29 @@ if __name__ == "__main__":
     x = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
     y = C.input_variable(shape=(img_channel, img_height, img_width), dtype="float32", needs_gradient=True)
 
-    x_norm = (x - 127.5) / 127.5
-    y_norm = (y - 127.5) / 127.5
+    x_real = (x - 127.5) / 127.5
+    y_real = (y - 127.5) / 127.5
     
-    F_fake = cyclegan_generator(y_norm)  # F(Y) -> X
-    G_fake = cyclegan_generator(x_norm)  # G(X) -> Y
+    F_fake = cyclegan_generator(y_real)  # F(Y) -> X
+    G_fake = cyclegan_generator(x_real)  # G(X) -> Y
 
-    x_hat = F_fake.clone(method="share", substitutions={y_norm.output: G_fake.output})  # F(G(X)) -> X'
-    y_hat = G_fake.clone(method="share", substitutions={x_norm.output: F_fake.output})  # G(F(Y)) -> Y'
+    x_hat = F_fake.clone(method="share", substitutions={y_real.output: G_fake.output})  # F(G(X)) -> X'
+    y_hat = G_fake.clone(method="share", substitutions={x_real.output: F_fake.output})  # G(F(Y)) -> Y'
 
     #
     # discriminator
     #
-    Dx_real = cyclegan_discriminator(x_norm)
-    Dx_fake = Dx_real.clone(method="share", substitutions={x_norm.output: F_fake.output})
+    Dx_real = cyclegan_discriminator(x_real)
+    Dx_fake = Dx_real.clone(method="share", substitutions={x_real.output: F_fake.output})
 
-    Dy_real = cyclegan_discriminator(y_norm)
-    Dy_fake = Dy_real.clone(method="share", substitutions={y_norm.output: G_fake.output})
+    Dy_real = cyclegan_discriminator(y_real)
+    Dy_fake = Dy_real.clone(method="share", substitutions={y_real.output: G_fake.output})
 
     #
     # loss function
     #
-    cycle_consistency_loss = lambda_x * C.reduce_mean(C.abs(x_hat - x_norm)) + \
-                             lambda_y * C.reduce_mean(C.abs(y_hat - y_norm))
+    cycle_consistency_loss = lambda_x * C.reduce_mean(C.abs(x_hat - x_real)) + \
+                             lambda_y * C.reduce_mean(C.abs(y_hat - y_real))
 
     F_loss = C.reduce_mean(C.square(Dx_fake - 1.0)) / 2 + cycle_consistency_loss
     G_loss = C.reduce_mean(C.square(Dy_fake - 1.0)) / 2 + cycle_consistency_loss
