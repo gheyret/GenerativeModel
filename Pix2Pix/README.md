@@ -2,6 +2,10 @@
 
 Pix2Pix - Paired Image Transfer
 
+<p align="center">
+  <img src="pix2pix.png">
+</p>
+
 ## Results
 
 <p align="center">
