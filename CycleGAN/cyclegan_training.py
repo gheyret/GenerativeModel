@@ -193,7 +193,7 @@ if __name__ == "__main__":
         Dy_epoch_loss = 0
         while sample_count < num_samples:
             #
-            # train discriminator
+            # discriminator
             #
             x_real = x_train_reader.next_minibatch(min(minibatch_size, num_samples - sample_count), input_map=x_input_map)
             y_real = y_train_reader.next_minibatch(min(minibatch_size, num_samples - sample_count), input_map=y_input_map)
@@ -208,7 +208,7 @@ if __name__ == "__main__":
             Dy_epoch_loss += Dy_trainer.previous_minibatch_loss_average
             
             #
-            # train generator
+            # generator
             #
             F_output = F_trainer.train_minibatch({F_loss.arguments[0]: y_real[y].data,
                                                   F_loss.arguments[1]: x_real[x].data}, outputs=[F_fake])
