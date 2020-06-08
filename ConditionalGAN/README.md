@@ -1,6 +1,6 @@
 # ConditionalGAN
 
-ConditionalGAN - ConditionalGAN MNIST
+ConditionalGAN - Categorical MNIST
 
 ## Results
 
