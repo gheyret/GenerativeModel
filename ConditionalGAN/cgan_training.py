@@ -76,7 +76,7 @@ if __name__ == "__main__":
     D_loss = - (C.log(D_real) + C.log(1.0 - D_fake))
 
     #
-    # optimizer and cyclical learning rate
+    # optimizer
     #
     G_learner = C.adam(G_fake.parameters, lr=C.learning_parameter_schedule_per_sample(2e-4), momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
