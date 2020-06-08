@@ -14,7 +14,7 @@ num_classes = 1
 
 z_dim = 100
 
-iteration = 10000
+iteration = 50000
 minibatch_size = 32
 n_critic = 5
 
