@@ -2,7 +2,7 @@
 
 ## ConditionalGAN
 
-ConditionalGAN - ConditionalGAN MNIST
+ConditionalGAN - Categorical MNIST
 
 <p align="center">
   <img src="ConditionalGAN/cgan_mnist.png", width=400, height=300>
