@@ -1,4 +1,3 @@
-
 import cntk as C
 import cv2
 import numpy as np
