@@ -23,6 +23,7 @@ lambda_y = 10.0
 
 
 def InstanceNormalization(initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
+    """ Instance Normalization (2016) """
     epsilon = C.get_default_override(InstanceNormalization, epsilon=epsilon)
 
     dtype = C.get_default_override(None, dtype=C.default_override_or(np.float32))
