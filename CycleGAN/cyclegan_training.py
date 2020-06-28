@@ -3,11 +3,11 @@ import cntk.io.transforms as xforms
 import cv2
 import numpy as np
 import os
+import pandas as pd
 
 from cntk.layers import Convolution2D, ConvolutionTranspose2D
 from cntk.layers.blocks import _INFERRED
 from cntk.ops.functions import BlockFunction
-from pandas import DataFrame
 
 img_channel = 3
 img_height = 512
@@ -258,7 +258,7 @@ if __name__ == "__main__":
     Dy_real.save("./cyclegan_Dy_discriminator.model")
     print("Saved model.")
 
-    df = DataFrame(logging)
+    df = pd.DataFrame(logging)
     df.to_csv("./cyclegan.csv", index=False)
     print("Saved logging.")
     
