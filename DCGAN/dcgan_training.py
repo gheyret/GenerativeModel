@@ -3,9 +3,9 @@ import cntk.io.transforms as xforms
 import cv2
 import numpy as np
 import os
+import pandas as pd
 
 from cntk.layers import BatchNormalization, Convolution2D, ConvolutionTranspose2D
-from pandas import DataFrame
 
 img_channel = 3
 img_height = 256
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     D_real.save("./dcgan_discriminator.model")
     print("Saved model.")
 
-    df = DataFrame(logging)
+    df = pd.DataFrame(logging)
     df.to_csv("./dcgan.csv", index=False)
     print("Saved logging.")
     
