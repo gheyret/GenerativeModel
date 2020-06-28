@@ -2,9 +2,9 @@ import cntk as C
 import cv2
 import numpy as np
 import os
+import pandas as pd
 
 from cntk.layers import BatchNormalization, Convolution2D, ConvolutionTranspose2D, Dense
-from pandas import DataFrame
 
 z_dim = 100
 input_dim = 784
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     D_real.save("./cgan_discriminator.model")
     print("Saved model.")
 
-    df = DataFrame(logging)
+    df = pd.DataFrame(logging)
     df.to_csv("./cgan.csv", index=False)
     print("Saved logging.")
     
