@@ -93,6 +93,7 @@ if __name__ == "__main__":
     bing_image_search()
 
     # face_detection("cv2/data/haarcascade_frontalface_default.xml")
+    
     # flip_augmentation()
     
     # dcgan_mapfile()
