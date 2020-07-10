@@ -1,6 +1,6 @@
 # Pix2Pix
 
-Pix2Pix - Paired Image Transfer
+Pix2Pix - Transfer Paired Image
 
 <p align="center">
   <img src="pix2pix.png">
