@@ -26,7 +26,7 @@ DCGAN - Deep Convolutional Generative Adversarial Networks
 
 ## Pix2Pix
 
-Pix2Pix - Paired Image Transfer
+Pix2Pix - Transfer Paired Image
 
 <p align="center">
   <img src="Pix2Pix/input_pix2pix_truth.png">
