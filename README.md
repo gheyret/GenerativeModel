@@ -34,7 +34,7 @@ Pix2Pix - Transfer Paired Image
 
 ## StyleGAN
 
-StyleGAN -
+StyleGAN - High Quality Fake
 
 ## WassersteinGAN
 
