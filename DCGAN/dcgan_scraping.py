@@ -78,9 +78,6 @@ def flip_augmentation():
 
 
 def dcgan_mapfile():
-    #
-    # mapfile for ImageDeserializer
-    #
     train_list = glob.glob("./faces/*.jpg")
     with open("train_dcgan_map.txt", "w") as map_file:
         for i, file in enumerate(train_list):
