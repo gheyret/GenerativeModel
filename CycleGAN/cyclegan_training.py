@@ -236,7 +236,7 @@ if __name__ == "__main__":
             cv2.imwrite("./image/G/epoch%d/fake.png" % epoch, G_image)  # G(X) -> Y
 
         #
-        # loss and error logging
+        # Dx loss, Dy loss, F loss and G loss logging
         #
         logging["epoch"].append(epoch + 1)
         logging["F_loss"].append(F_epoch_loss / (num_samples / minibatch_size))
