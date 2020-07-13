@@ -172,7 +172,7 @@ if __name__ == "__main__":
             cv2.imwrite("./wgan_image/step%d/fake.png" % step, image)
 
         #
-        # loss and error logging
+        # G loss and C loss logging
         #
         logging["step"].append(step + 1)
         logging["G_loss"].append(G_step_loss)
