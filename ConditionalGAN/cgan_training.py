@@ -133,7 +133,7 @@ if __name__ == "__main__":
             cv2.imwrite("./cgan_image/step%d/fake.png" % step, image)
 
         #
-        # loss and error logging
+        # G loss and D loss logging
         #
         logging["step"].append(step + 1)
         logging["G_loss"].append(G_step_loss)
