@@ -1,3 +1,3 @@
 # StyleGAN
 
-SytleGAN - 
+StyleGAN - High Quality Fake
