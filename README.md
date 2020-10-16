@@ -18,7 +18,7 @@ CycleGAN - Transfer Skin Color
 
 ## DCGAN
 
-DCGAN - Deep Convolutional Generative Adversarial Networks
+DCGAN - Deep Convolutional Generative Adversarial Network
 
 <p align="center">
   <img src="DCGAN/dcgan_image.png">
