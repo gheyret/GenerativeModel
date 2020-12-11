@@ -18,8 +18,7 @@ epoch_size = 500
 minibatch_size = 1
 num_samples = 101
 
-lambda_x = 10.0
-lambda_y = 10.0
+lambda_x = lambda_y = 10.0
 
 
 def InstanceNormalization(initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
