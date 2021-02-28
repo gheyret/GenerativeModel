@@ -21,13 +21,13 @@ num_samples = 101
 lambda_x = lambda_y = 10.0
 
 
-def InstanceNormalization(initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
+def InstanceNormalization(shape, initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
     epsilon = C.get_default_override(InstanceNormalization, epsilon=epsilon)
 
     dtype = C.get_default_override(None, dtype=C.default_override_or(np.float32))
 
-    scale = C.Parameter(_INFERRED, init=initial_scale, name='scale')
-    bias = C.Parameter(_INFERRED, init=initial_bias, name='bias')
+    scale = C.Parameter(shape, init=initial_scale, name='scale')
+    bias = C.Parameter(shape, init=initial_bias, name='bias')
     epsilon = np.asarray(epsilon, dtype=dtype)
 
     @BlockFunction('InstanceNormalization', name)
@@ -54,16 +54,16 @@ def create_reader(map_file, is_train):
 
 def residual_block(h, num_filters):
     with C.layers.default_options(init=C.normal(0.02), pad=True, strides=1, bias=False):
-        h1 = C.relu(InstanceNormalization()(Convolution2D((3, 3), num_filters)(h)))
-        h2 = InstanceNormalization()(Convolution2D((3, 3), num_filters)(h1))
+        h1 = C.relu(InstanceNormalization((num_filters, 1, 1))(Convolution2D((3, 3), num_filters)(h)))
+        h2 = InstanceNormalization((num_filters, 1, 1))(Convolution2D((3, 3), num_filters)(h1))
         return C.relu(h2 + h)
 
 
 def cyclegan_generator(h):
     with C.layers.default_options(init=C.normal(0.02), pad=True, strides=1, bias=False):
-        h = C.relu(InstanceNormalization()(Convolution2D((7, 7), 64)(h)))
-        h = C.relu(InstanceNormalization()(Convolution2D((3, 3), 128, strides=2)(h)))
-        h = C.relu(InstanceNormalization()(Convolution2D((3, 3), 256, strides=2)(h)))
+        h = C.relu(InstanceNormalization((64, 1, 1))(Convolution2D((7, 7), 64)(h)))
+        h = C.relu(InstanceNormalization((128, 1, 1))(Convolution2D((3, 3), 128, strides=2)(h)))
+        h = C.relu(InstanceNormalization((256, 1, 1))(Convolution2D((3, 3), 256, strides=2)(h)))
 
         h = residual_block(h, 256)
         h = residual_block(h, 256)
@@ -77,10 +77,10 @@ def cyclegan_generator(h):
         h = residual_block(h, 256)
         h = residual_block(h, 256)
 
-        h = C.relu(InstanceNormalization()(ConvolutionTranspose2D((3, 3), 128, strides=2,
-                                                                  output_shape=(img_height // 2, img_width // 2))(h)))
-        h = C.relu(InstanceNormalization()(ConvolutionTranspose2D((3, 3), 64, strides=2,
-                                                                  output_shape=(img_height, img_width))(h)))
+        h = C.relu(InstanceNormalization((128, 1, 1)))(
+            ConvolutionTranspose2D((3, 3), 128, strides=2, output_shape=(img_height // 2, img_width // 2))(h)))
+        h = C.relu(InstanceNormalization((64, 1, 1)))(
+            ConvolutionTranspose2D((3, 3), 64, strides=2, output_shape=(img_height, img_width))(h)))
         h = Convolution2D((7, 7), 3, activation=C.tanh, bias=True)(h)
 
         return h
@@ -90,9 +90,9 @@ def cyclegan_discriminator(h):
     with C.layers.default_options(init=C.normal(0.02), pad=True, bias=False):
         h = C.leaky_relu(Convolution2D((3, 3), 64, strides=2, bias=True)(h), alpha=0.2)
 
-        h = C.leaky_relu(InstanceNormalization()(Convolution2D((3, 3), 128, strides=2)(h)), alpha=0.2)
-        h = C.leaky_relu(InstanceNormalization()(Convolution2D((3, 3), 256, strides=2)(h)), alpha=0.2)
-        h = C.leaky_relu(InstanceNormalization()(Convolution2D((3, 3), 512, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(InstanceNormalization((128, 1, 1)))(Convolution2D((3, 3), 128, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(InstanceNormalization((256, 1, 1)))(Convolution2D((3, 3), 256, strides=2)(h)), alpha=0.2)
+        h = C.leaky_relu(InstanceNormalization((512, 1, 1)))(Convolution2D((3, 3), 512, strides=2)(h)), alpha=0.2)
 
         h = Convolution2D((1, 1), 1, activation=C.sigmoid, bias=True)(h)
 
@@ -144,9 +144,9 @@ if __name__ == "__main__":
     #
     # optimizer
     #
-    F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.5,
+    F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.0,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5,
+    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.0,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     Dx_learner = C.adam(Dx_real.parameters, lr=1e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
