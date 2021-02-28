@@ -6,7 +6,6 @@ import os
 import pandas as pd
 
 from cntk.layers import Convolution2D, ConvolutionTranspose2D
-from cntk.layers.blocks import _INFERRED
 from cntk.ops.functions import BlockFunction
 
 img_channel = 3
@@ -21,17 +20,19 @@ num_samples = 101
 lambda_x = lambda_y = 10.0
 
 
-def InstanceNormalization(shape, initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
+def InstanceNormalization(
+        norm_shape, initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
+    """ Instance Normalization (2016) """
     epsilon = C.get_default_override(InstanceNormalization, epsilon=epsilon)
 
     dtype = C.get_default_override(None, dtype=C.default_override_or(np.float32))
 
-    scale = C.Parameter(shape, init=initial_scale, name='scale')
-    bias = C.Parameter(shape, init=initial_bias, name='bias')
+    scale = C.Parameter(norm_shape, init=initial_scale, name='scale')
+    bias = C.Parameter(norm_shape, init=initial_bias, name='bias')
     epsilon = np.asarray(epsilon, dtype=dtype)
 
     @BlockFunction('InstanceNormalization', name)
-    def instance_normalize(x):
+    def instance_normalization(x):
         mean = C.reduce_mean(x, axis=(1, 2))
         x0 = x - mean
         std = C.sqrt(C.reduce_mean(x0 * x0, axis=(1, 2)))
@@ -40,7 +41,7 @@ def InstanceNormalization(shape, initial_scale=1, initial_bias=0, epsilon=C.defa
         x_hat = x0 / std
         return x_hat * scale + bias
 
-    return instance_normalize
+    return instance_normalization
 
 
 def create_reader(map_file, is_train):
@@ -194,8 +195,8 @@ if __name__ == "__main__":
             #
             # discriminator
             #
-            x_real = x_train_reader.next_minibatch(min(minibatch_size, num_samples - sample_count), input_map=x_input_map)
-            y_real = y_train_reader.next_minibatch(min(minibatch_size, num_samples - sample_count), input_map=y_input_map)
+            x_real = x_train_reader.next_minibatch(minibatch_size, input_map=x_input_map)
+            y_real = y_train_reader.next_minibatch(minibatch_size, input_map=y_input_map)
 
             x_fake = F_fake.eval(y_real)
             y_fake = G_fake.eval(x_real)
@@ -225,14 +226,8 @@ if __name__ == "__main__":
             F_image = np.transpose(list(F_output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
             G_image = np.transpose(list(G_output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
             
-            if not os.path.exists("./image/F/epoch%d" % epoch):
-                os.makedirs("./image/F/epoch%d" % epoch)
-
-            if not os.path.exists("./image/G/epoch%d" % epoch):
-                os.makedirs("./image/G/epoch%d" % epoch)
-
-            cv2.imwrite("./image/F/epoch%d/fake.png" % epoch, F_image)  # F(Y) -> X
-            cv2.imwrite("./image/G/epoch%d/fake.png" % epoch, G_image)  # G(X) -> Y
+            cv2.imwrite("./image/F/epoch%d.png" % epoch, F_image)  # F(Y) -> X
+            cv2.imwrite("./image/G/epoch%d.png" % epoch, G_image)  # G(X) -> Y
 
         #
         # Dx loss, Dy loss, F loss and G loss logging
