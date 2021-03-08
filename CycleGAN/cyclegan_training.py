@@ -6,7 +6,6 @@ import os
 import pandas as pd
 
 from cntk.layers import Convolution2D, ConvolutionTranspose2D
-from cntk.ops.functions import BlockFunction
 
 img_channel = 3
 img_height = 512
@@ -31,7 +30,7 @@ def InstanceNormalization(
     bias = C.Parameter(num_channel, init=initial_bias, name='bias')
     epsilon = np.asarray(epsilon, dtype=dtype)
 
-    @BlockFunction('InstanceNormalization', name)
+    @C.BlockFunction('InstanceNormalization', name)
     def instance_normalization(x):
         mean = C.reduce_mean(x, axis=(1, 2))
         x0 = x - mean
