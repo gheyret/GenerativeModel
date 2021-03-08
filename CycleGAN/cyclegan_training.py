@@ -21,14 +21,14 @@ lambda_x = lambda_y = 10.0
 
 
 def InstanceNormalization(
-        norm_shape, initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
+        num_channel, initial_scale=1, initial_bias=0, epsilon=C.default_override_or(0.00001), name=''):
     """ Instance Normalization (2016) """
     epsilon = C.get_default_override(InstanceNormalization, epsilon=epsilon)
 
     dtype = C.get_default_override(None, dtype=C.default_override_or(np.float32))
 
-    scale = C.Parameter(norm_shape, init=initial_scale, name='scale')
-    bias = C.Parameter(norm_shape, init=initial_bias, name='bias')
+    scale = C.Parameter(num_channel, init=initial_scale, name='scale')
+    bias = C.Parameter(num_channel, init=initial_bias, name='bias')
     epsilon = np.asarray(epsilon, dtype=dtype)
 
     @BlockFunction('InstanceNormalization', name)
@@ -39,7 +39,7 @@ def InstanceNormalization(
         if epsilon != 0:
             std += epsilon
         x_hat = x0 / std
-        return x_hat * scale + bias
+        return x_hat * C.reshape(scale, (-1, 1, 1)) + C.reshape(bias, (-1, 1, 1))
 
     return instance_normalization
 
@@ -145,13 +145,13 @@ if __name__ == "__main__":
     #
     # optimizer
     #
-    F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.0,
+    F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.0,
+    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dx_learner = C.adam(Dx_real.parameters, lr=1e-4, momentum=0.0,
+    Dx_learner = C.adam(Dx_real.parameters, lr=1e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dy_learner = C.adam(Dy_real.parameters, lr=1e-4, momentum=0.0,
+    Dy_learner = C.adam(Dy_real.parameters, lr=1e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
 
     F_progress_printer = C.logging.ProgressPrinter(tag="F Generator")
