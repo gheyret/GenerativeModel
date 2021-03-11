@@ -56,7 +56,7 @@ def residual_block(h, num_filters):
     with C.layers.default_options(init=C.normal(0.02), pad=True, strides=1, bias=False):
         h1 = C.relu(InstanceNormalization((num_filters, 1, 1))(Convolution2D((3, 3), num_filters)(h)))
         h2 = InstanceNormalization((num_filters, 1, 1))(Convolution2D((3, 3), num_filters)(h1))
-        return C.relu(h2 + h)
+        return h2 + h
 
 
 def cyclegan_generator(h):
@@ -144,13 +144,13 @@ if __name__ == "__main__":
     #
     # optimizer
     #
-    F_learner = C.adam(F_fake.parameters, lr=1e-4, momentum=0.5,
+    F_learner = C.adam(F_fake.parameters, lr=2e-4, momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    G_learner = C.adam(G_fake.parameters, lr=1e-4, momentum=0.5,
+    G_learner = C.adam(G_fake.parameters, lr=2e-4, momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dx_learner = C.adam(Dx_real.parameters, lr=1e-4, momentum=0.5,
+    Dx_learner = C.adam(Dx_real.parameters, lr=2e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dy_learner = C.adam(Dy_real.parameters, lr=1e-4, momentum=0.5,
+    Dy_learner = C.adam(Dy_real.parameters, lr=2e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
 
     F_progress_printer = C.logging.ProgressPrinter(tag="F Generator")
