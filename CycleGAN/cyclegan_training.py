@@ -14,7 +14,7 @@ num_classes = 1
 
 epoch_size = 500
 minibatch_size = 1
-num_samples = 101
+num_samples = 56
 
 lambda_x = lambda_y = 10.0
 
@@ -148,9 +148,9 @@ if __name__ == "__main__":
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
     G_learner = C.adam(G_fake.parameters, lr=2e-4, momentum=0.5,
                        gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dx_learner = C.adam(Dx_real.parameters, lr=2e-4, momentum=0.5,
+    Dx_learner = C.adam(Dx_real.parameters, lr=1e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
-    Dy_learner = C.adam(Dy_real.parameters, lr=2e-4, momentum=0.5,
+    Dy_learner = C.adam(Dy_real.parameters, lr=1e-4, momentum=0.5,
                         gradient_clipping_threshold_per_sample=minibatch_size, gradient_clipping_with_truncation=True)
 
     F_progress_printer = C.logging.ProgressPrinter(tag="F Generator")
@@ -161,6 +161,9 @@ if __name__ == "__main__":
     if not os.path.exists("./image"):
         os.makedirs("./image/F")
         os.makedirs("./image/G")
+        
+    if not os.path.exists("./model"):
+        os.mkdir("./model")
 
     if not os.path.exists("./tensorboard"):
         os.makedirs("./tensorboard/F")
@@ -227,6 +230,9 @@ if __name__ == "__main__":
             
             cv2.imwrite("./image/F/epoch%d.png" % epoch, F_image)  # F(Y) -> X
             cv2.imwrite("./image/G/epoch%d.png" % epoch, G_image)  # G(X) -> Y
+        
+            F_fake.save("./model/cyclegan_F_generator%d.model" % epoch)
+            G_fake.save("./model/cyclegan_G_generator%d.model" % epoch)
 
         #
         # Dx loss, Dy loss, F loss and G loss logging
