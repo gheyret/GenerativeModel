@@ -95,7 +95,7 @@ def pix2pix_discriminator(y, x):
         h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 256, strides=2)(h)), alpha=0.2)
         h = C.leaky_relu(BatchNormalization()(Convolution2D((3, 3), 512, strides=2)(h)), alpha=0.2)
 
-        h = Convolution2D((1, 1), 1, activation=C.sigmoid, bias=True)(h)
+        h = Convolution2D((1, 1), 1, activation=None, bias=True)(h)
 
         return h
 
