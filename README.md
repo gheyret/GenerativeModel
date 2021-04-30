@@ -5,7 +5,7 @@
 AutoEncoder - AutoEncoder MNIST
 
 <p align="center">
-  <img src="AutoEncoder/autoencoder_visualization.png">
+  <img src="AutoEncoder/autoencoder_reconstruction.png">
 </p>
 
 ## ConditionalGAN
