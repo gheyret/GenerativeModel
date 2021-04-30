@@ -1,4 +1,12 @@
-# Generative Adversarial Networks
+# Generative Model
+
+## AutoEncoder
+
+AutoEncoder - AutoEncoder MNIST
+
+<p align="center">
+  <img src="AutoEncoder/autoencoder_visualization.png">
+</p>
 
 ## ConditionalGAN
 
@@ -32,9 +40,37 @@ Pix2Pix - Transfer Paired Image
   <img src="Pix2Pix/input_pix2pix_truth.png">
 </p>
 
+## PixelCNN
+
+PixelCNN - 
+
+<p align="center">
+  <img src="PixelCNN/mnist_pixelcnn.png">
+</p>
+
 ## StyleGAN
 
 StyleGAN - High Quality Fake
+
+## VAE
+
+VAE - Variational AutoEncoder
+
+<p align="center">
+  <img src="VAE/mnist_vae_embedding.png">
+</p>
+
+## VQVAE
+
+VQVAE - Vector Quantized VAE
+
+<p align="center">
+  <img src="VQVAE/cifar10_vqvae_reconstruction.png">
+</p>
+
+## VQVAE2
+
+VQVAE2 - 
 
 ## WassersteinGAN
 
