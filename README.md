@@ -45,7 +45,7 @@ Pix2Pix - Transfer Paired Image
 PixelCNN - 
 
 <p align="center">
-  <img src="PixelCNN/mnist_pixelcnn.png">
+  <img src="PixelCNN/mnist_autoregressive.png">
 </p>
 
 ## StyleGAN
