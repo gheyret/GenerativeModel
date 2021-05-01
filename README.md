@@ -42,7 +42,7 @@ Pix2Pix - Transfer Paired Image
 
 ## PixelCNN
 
-PixelCNN - 
+PixelCNN - Pixel Convolutional Neural Networks
 
 <p align="center">
   <img src="PixelCNN/mnist_autoregressive.png">
