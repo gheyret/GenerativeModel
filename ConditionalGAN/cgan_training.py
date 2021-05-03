@@ -127,10 +127,7 @@ if __name__ == "__main__":
         if step % 1000 == 0:
             image = np.reshape(list(output[1].values())[0][0], (28, 28)) * 255
             
-            if not os.path.exists("./cgan_image/step%d" % step):
-                os.mkdir("./cgan_image/step%d" % step)
-
-            cv2.imwrite("./cgan_image/step%d/fake.png" % step, image)
+            cv2.imwrite("./image/step%d.png" % step, image)
 
         #
         # G loss and D loss logging
