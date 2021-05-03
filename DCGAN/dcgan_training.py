@@ -150,10 +150,7 @@ if __name__ == "__main__":
         if step % 10 == 0:
             image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
         
-            if not os.path.exists("./dcgan_image/step%d" % step):
-                os.mkdir("./dcgan_image/step%d" % step)
-
-            cv2.imwrite("./dcgan_image/step%d/fake.png" % step, image)
+            cv2.imwrite("./image/step%d.png" % step, image)
 
         #
         # G loss and D loss logging
