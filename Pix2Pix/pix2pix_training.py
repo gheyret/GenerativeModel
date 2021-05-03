@@ -179,10 +179,7 @@ if __name__ == "__main__":
         if epoch % 10 == 0:
             image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
             
-            if not os.path.exists("./pix2pix_image/epoch%d" % epoch):
-                os.mkdir("./pix2pix_image/epoch%d" % epoch)
-
-            cv2.imwrite("./pix2pix_image/epoch%d/fake.png" % epoch, image)
+            cv2.imwrite("./pix2pix_image/epoch%d.png" % epoch, image)
             
         #
         # G loss and D loss logging
