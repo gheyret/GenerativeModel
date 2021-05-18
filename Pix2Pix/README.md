@@ -9,5 +9,5 @@ Pix2Pix - Transfer Paired Image
 ## Results
 
 <p align="center">
-  <img src="input_pix2pix_truth.png">
+  <img src="pix2pix_transfer.png">
 </p>
