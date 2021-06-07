@@ -14,7 +14,7 @@ num_classes = 1
 
 z_dim = 100
 
-iteration = 50000
+iteration = 10000
 minibatch_size = 32
 
 
@@ -147,7 +147,7 @@ if __name__ == "__main__":
         #
         # save image
         #
-        if step % 10 == 0:
+        if step % 1000 == 0:
             image = np.transpose(list(output[1].values())[0][0] / 2 + 0.5, (1, 2, 0)) * 255
         
             cv2.imwrite("./image/step%d.png" % step, image)
