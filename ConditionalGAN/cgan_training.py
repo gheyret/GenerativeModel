@@ -124,7 +124,7 @@ if __name__ == "__main__":
         #
         # tensorboard image
         #
-        if step % 1000 == 0:
+        if step % 10 == 0:
             image = np.reshape(list(output[1].values())[0][0], (28, 28)) * 255
             
             cv2.imwrite("./image/step%d.png" % step, image)
