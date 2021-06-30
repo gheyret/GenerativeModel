@@ -7,7 +7,7 @@ DCGAN - Deep Convolutional Generative Adversarial Network
 ## Results
 
 <p align="center">
-  <img src="dcgan_image.png">
+  <img src="dcgan_image.png", width=512, height=512>
 </p>
 
 <p align="center">
