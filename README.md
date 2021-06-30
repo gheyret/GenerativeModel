@@ -29,7 +29,7 @@ CycleGAN - Transfer Skin Color
 DCGAN - Deep Convolutional Generative Adversarial Network
 
 <p align="center">
-  <img src="DCGAN/dcgan_image.png">
+  <img src="DCGAN/dcgan_image.png", width=512, height=512>
 </p>
 
 ## Pix2Pix
@@ -77,5 +77,5 @@ VQVAE2 -
 WassersteinGAN - Wasserstein GAN Gradient Penalty
 
 <p align="center">
-  <img src="WassersteinGAN/wgan_image.png">
+  <img src="WassersteinGAN/wgan_image.png", width=512, height=512>
 </p>
