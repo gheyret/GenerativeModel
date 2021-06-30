@@ -52,6 +52,10 @@ PixelCNN - Pixel Convolutional Neural Networks
 
 StyleGAN - High Quality Fake
 
+<p align="center">
+  <img src="StyleGAN/stylegan_image.png", width=512, height=512>
+</p>
+
 ## VAE
 
 VAE - Variational AutoEncoder
