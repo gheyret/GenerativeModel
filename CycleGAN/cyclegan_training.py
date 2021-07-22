@@ -231,6 +231,7 @@ if __name__ == "__main__":
             cv2.imwrite("./image/F/epoch%d.png" % epoch, F_image)  # F(Y) -> X
             cv2.imwrite("./image/G/epoch%d.png" % epoch, G_image)  # G(X) -> Y
         
+        if epoch % (epoch_size // 10) == 0:
             F_fake.save("./model/cyclegan_F_generator%d.model" % epoch)
             G_fake.save("./model/cyclegan_G_generator%d.model" % epoch)
 
