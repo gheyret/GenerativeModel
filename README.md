@@ -69,7 +69,7 @@ VAE - Variational AutoEncoder
 VQVAE - Vector Quantized VAE
 
 <p align="center">
-  <img src="VQVAE/cifar10_vqvae_reconstruction.png">
+  <img src="VQVAE/cifar10_vqvae_quantized.png">
 </p>
 
 ## VQVAE2
